@@ -12,6 +12,12 @@ This repository implements an enterprise-like full-stack application that ingest
 
 ----------------------------------------
 
+High Level System Architecture:
+
+https://drive.google.com/file/d/1MzF3M-PMONt0YPIuAqFXE-lWjggoucyt/view?usp=sharing
+
+----------------------------------------
+
 Members:
 
 Sedem Amuzu (GitHub: @SamuzuKofi)
