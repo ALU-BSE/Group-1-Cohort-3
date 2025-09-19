@@ -1,0 +1,135 @@
+{
+  "user_id": "U12345",
+  "name": "Alice Johnson",
+  "mobile_number": "+250788123456",
+  "user_type": "Customer",
+  "created_at": "2025-09-19T08:30:00Z"
+}
+
+{
+  "sms_id": "SMS98765",
+  "protocol": 1,
+  "address": "+250788654321",
+  "date_sent": "2025-09-18T10:15:00Z",
+  "type": 2,
+  "subject": "Transaction Alert",
+  "sms_body": "You have received 10,000 RWF from Alice Johnson.",
+  "read": 1,
+  "status": 0,
+  "sub_id": "SUB101"
+}
+
+{
+
+  "date_sent": "2025-09-18T10:15:00Z",
+  "type": 2,
+  "subject": "Transaction Alert",
+  "sms_body": "You have received 10,000 RWF from Alice Johnson.",
+  "read": 1,
+  "status": 0,
+  "sub_id": "SUB101"
+}
+
+{
+  "backup_id": "BCK20250919",
+  "backup_set": "Daily_Backup_01",
+  "backup_date": 20250919,
+  "type": "Full",
+  "count": 1200
+}
+
+{
+  "category_id": 101,
+  "payment_type": "Mobile Money",
+  "transfer_type": "Peer-to-Peer"
+}
+
+{
+  "transaction_id": "TX56789",
+  "sender_id": "U12345",
+  "receiver_id": "U67890",
+  "transaction_category_id": 101,
+  "sms_id": "SMS98765",
+  "amount": 10000,
+  "currency": "RWF",
+  "status": "Completed",
+  "received_at": "2025-09-18T10:16:00Z",
+  "balance_after": 45000,
+  "created_at": "2025-09-18T10:15:00Z",
+  "transaction_type": "Transfer"
+}
+
+{
+  "service_center_id": "SC001",
+  "phone_number": "+250788000111",
+  "isp_name": "MTN Rwanda"
+}
+
+{
+  "log_id": "LOG1234",
+  "transaction_id": "TX56789",
+  "level": "INFO",
+  "component": 2,
+  "payload": "Transaction completed successfully",
+  "created_at": "2025-09-18T10:16:05Z"
+}
+
+
+
+
+
+
+{
+  "transaction_id": "TX56789",
+  "amount": 10000,
+  "currency": "RWF",
+  "status": "Completed",
+  "transaction_type": "Transfer",
+  "received_at": "2025-09-18T10:16:00Z",
+  "balance_after": 45000,
+  "created_at": "2025-09-18T10:15:00Z",
+
+  "sender": {
+    "user_id": "U12345",
+    "name": "Alice Johnson",
+    "mobile_number": "+250788123456",
+    "user_type": "Customer"
+  },
+
+  "receiver": {
+    "user_id": "U67890",
+    "name": "Bob Niyonsaba",
+    "mobile_number": "+250788987654",
+    "user_type": "Customer"
+  },
+
+  "transaction_category": {
+    "category_id": 101,
+    "payment_type": "Mobile Money",
+    "transfer_type": "Peer-to-Peer"
+  },
+
+  "sms": {
+    "sms_id": "SMS98765",
+    "address": "+250788654321",
+    "date_sent": "2025-09-18T10:15:00Z",
+    "sms_body": "You have received 10,000 RWF from Alice Johnson."
+  },
+
+  "logs": [
+    {
+      "log_id": "LOG1234",
+      "level": "INFO",
+      "component": 2,
+      "payload": "Transaction completed successfully",
+      "created_at": "2025-09-18T10:16:05Z"
+    },
+    {
+      "log_id": "LOG1235",
+      "level": "INFO",
+      "component": 3,
+      "payload": "SMS delivered to receiver",
+      "created_at": "2025-09-18T10:16:10Z"
+    }
+  ]
+}
