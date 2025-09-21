@@ -233,6 +233,7 @@ CREATE TABLE `System Log` (
   "created_at": "2025-09-18T10:16:05Z"
 }
 ```
+---
 
 ### Database Schema & Sample Data
 
@@ -525,6 +526,15 @@ The following screenshot shows a successful update operation on the `Transaction
 #### **Delete**
 The following screenshot shows a successful delete operation from the `SMS` table.  
 ![Delete Operation](CRUD%20operations%20img/Delete.png)
+
+---
+
+## Database Documentation
+
+We designed a database for our web app ... Overall, our design allows for easy viewing and accessing of data.
+
+**Download the full Database Design Document (PDF):**  
+[Database Design Document (PDF)](Database%20Design%20Document.pdf)
 
 ---
 
