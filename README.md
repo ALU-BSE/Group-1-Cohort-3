@@ -31,6 +31,208 @@ The following image shows an Entity Relationship Diagram(ERD) in Crow's foot not
 ![Momo ERD](database/Momo%20ERD.png)
 
 ---
+### Mapping between SQL Tables and JSON representations
+
+#### **User Table to JSON User Object**
+
+**SQL Table:** `User`
+```sql
+CREATE TABLE `User` (
+  `User_id` VARCHAR(50) PRIMARY KEY NOT NULL,
+  `First_name` VARCHAR(255),
+  `Last_name` VARCHAR(255),
+  `Mobile_number` VARCHAR(50),
+  `User_type` VARCHAR(50),
+  `Created_at` TIMESTAMP
+);
+```
+
+**JSON Representation:**
+```json
+{
+  "user_id": "U12345",
+  "name": "Alice Johnson",
+  "mobile_number": "+250788123456",
+  "user_type": "Customer",
+  "created_at": "2025-09-19T08:30:00Z"
+}
+```
+
+#### **SMS Table to JSON SMS Object**
+
+**SQL Table:** `SMS`
+```sql
+CREATE TABLE `SMS` (
+  `SMS_id` VARCHAR(50) PRIMARY KEY NOT NULL,
+  `Transaction_id` VARCHAR(50),
+  `Protocol` INT,
+  `Address` VARCHAR(50),
+  `Date_sent` TIMESTAMP,
+  `Type` INT,
+  `Subject` VARCHAR(255),
+  `SMS_Body` VARCHAR(500),
+  `Read` INT,
+  `Status` INT,
+  `Sub_id` VARCHAR(50)
+);
+```
+
+**JSON Representation:**
+```json
+{
+  "sms_id": "SMS98765",
+  "protocol": 1,
+  "address": "+250788654321",
+  "date_sent": "2025-09-18T10:15:00Z",
+  "type": 2,
+  "subject": "Transaction Alert",
+  "sms_body": "You have received 10,000 RWF from Alice Johnson.",
+  "read": 1,
+  "status": 0,
+  "sub_id": "SUB101"
+}
+```
+
+**JSON Representation:**
+```json
+{
+  "date_sent": "2025-09-18T10:15:00Z",
+  "type": 2,
+  "subject": "Transaction Alert",
+  "sms_body": "You have received 10,000 RWF from Alice Johnson.",
+  "read": 1,
+  "status": 0,
+  "sub_id": "SUB101"
+}
+```
+
+#### **Backup Table to JSON Backup Object**
+
+**SQL Table:** `Backup`
+```sql
+CREATE TABLE `Backup` (
+  `Backup_id` VARCHAR(50) PRIMARY KEY NOT NULL,
+  `Backup_set` VARCHAR(255),
+  `Backup_date` TIMESTAMP,
+  `Type` VARCHAR(50),
+  `Count` INT
+);
+```
+
+**JSON Representation:**
+```json
+{
+  "backup_id": "BCK20250919",
+  "backup_set": "Daily_Backup_01",
+  "backup_date": 20250919,
+  "type": "Full",
+  "count": 1200
+}
+```
+
+#### **Transaction Category Table to JSON Category Object**
+
+**SQL Table:** `Transaction Category`
+```sql
+CREATE TABLE `Transaction Category` (
+  `Category_id` VARCHAR(50) PRIMARY KEY NOT NULL,
+  `Payment_type` VARCHAR(50),
+  `Transfer_type` VARCHAR(50)
+);
+```
+
+**JSON Representation:**
+```json
+{
+  "category_id": 101,
+  "payment_type": "Mobile Money",
+  "transfer_type": "Peer-to-Peer"
+}
+```
+
+#### **Transaction Table to JSON Transaction Object**
+
+**SQL Table:** `Transaction`
+```sql
+CREATE TABLE `Transaction` (
+  `Transaction_id` VARCHAR(50) PRIMARY KEY NOT NULL,
+  `Sender_id` VARCHAR(50),
+  `Receiver_id` VARCHAR(50),
+  `Transaction_category_id` VARCHAR(50),
+  `Amount` FLOAT CHECK (Amount >= 0),
+  `Currency` VARCHAR(10),
+  `Status` VARCHAR(20),
+  `Recieved_at` TIMESTAMP,
+  `Balance_after` FLOAT CHECK (balance_after >= 0),
+  `created_at` TIMESTAMP,
+  `Transaction Type` VARCHAR(50)
+);
+```
+
+**JSON Representation:**
+```json
+{
+  "transaction_id": "TX56789",
+  "sender_id": "U12345",
+  "receiver_id": "U67890",
+  "transaction_category_id": 101,
+  "sms_id": "SMS98765",
+  "amount": 10000,
+  "currency": "RWF",
+  "status": "Completed",
+  "received_at": "2025-09-18T10:16:00Z",
+  "balance_after": 45000,
+  "created_at": "2025-09-18T10:15:00Z",
+  "transaction_type": "Transfer"
+}
+```
+
+
+#### **Service Centre Table to JSON Service Center Object**
+
+**SQL Table:** `Service Centre`
+```sql
+CREATE TABLE `Service Centre` (
+  `Service_center_id` VARCHAR(50) PRIMARY KEY NOT NULL,
+  `Mobile_number` VARCHAR(50),
+  `ISP_Name` VARCHAR(250)
+);
+```
+
+**JSON Representation:**
+```json
+{
+  "service_center_id": "SC001",
+  "phone_number": "+250788000111",
+  "isp_name": "MTN Rwanda"
+}
+```
+
+#### **System Log Table to JSON Log Object**
+
+**SQL Table:** `System Log`
+```sql
+CREATE TABLE `System Log` (
+  `Log_id` VARCHAR(50) PRIMARY KEY NOT NULL,
+  `Transaction_id` VARCHAR(50),
+  `level` VARCHAR(50),
+  `Component` INT,
+  `payload` VARCHAR(255),
+  `created_at` TIMESTAMP
+);
+```
+
+**JSON Representation:**
+```json
+{
+  "log_id": "LOG1234",
+  "transaction_id": "TX56789",
+  "level": "INFO",
+  "component": 2,
+  "payload": "Transaction completed successfully",
+  "created_at": "2025-09-18T10:16:05Z"
+}
+```
 
 ### Database Schema & Sample Data
 
