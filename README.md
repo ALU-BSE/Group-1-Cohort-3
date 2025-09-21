@@ -28,7 +28,7 @@ Amounts transferred are in integer format, dates and times are formatted in DATE
 ### ERD Design(Crow's Foot)
 
 The following image shows an Entity Relationship Diagram(ERD) in Crow's foot notation. 
-![Momo ERD](database/Momo%20ERD.png)
+![Momo ERD](database/Momo%20ERD(1).png)
 
 ---
 ### Mapping between SQL Tables and JSON representations
@@ -540,8 +540,8 @@ We designed a database for our web app ... Overall, our design allows for easy v
 
 ## Members
 
-Sedem Amuzu (GitHub: [@SamuzuKofi](https://github.com/SamuzuKofi))
-Joshua Agonzibwa (GitHub: [@jagonzibwa](https://github.com/jagonzibwa))
+Sedem Amuzu (GitHub: [@SamuzuKofi](https://github.com/SamuzuKofi))  
+Joshua Agonzibwa (GitHub: [@jagonzibwa](https://github.com/jagonzibwa))  
 Larry Sentore (GitHub: [@Larry-Sentore](https://github.com/Larry-Sentore))
 
 ----------------------------------------
