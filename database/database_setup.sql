@@ -219,7 +219,7 @@ ON `System Log` (`Transaction_id`);
 CREATE INDEX idx_user_mobile 
 ON `User` (`mobile_number`);
 
-
+-- AI-assisted data population
 -- Transaction Category
 INSERT INTO `Transaction Category` (`Payment_type`, `Transfer_type`) VALUES
   ('Payment', 'Bank Transfer'),

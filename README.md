@@ -310,25 +310,26 @@ Each operation is illustrated with a screenshot from the `/CRUD operations img/`
 #### **Create**
 The following screenshot shows a successful insert operation into the `User` table.  
 ![Create Operation](CRUD%20operations%20img/Create.png)
+![Create Operation](CRUD%20operations%20img/Create_02.png)
 
 #### **Read**
 The following screenshot shows a successful select operation from the `User` table.  
 ![Read Operation](CRUD%20operations%20img/Read.png)
 
 #### **Update**
-The following screenshot shows a successful update operation on the `User` table.  
+The following screenshot shows a successful update operation on the `Transaction` table.  
 ![Update Operation](CRUD%20operations%20img/Update.png)
 
 #### **Delete**
-The following screenshot shows a successful delete operation from the `User` table.  
+The following screenshot shows a successful delete operation from the `SMS` table.  
 ![Delete Operation](CRUD%20operations%20img/Delete.png)
 
 ---
 
 ## Members
 
-Sedem Amuzu (GitHub: [@SamuzuKofi](https://github.com/SamuzuKofi))  
-Joshua Agonzibwa (GitHub: [@jagonzibwa](https://github.com/jagonzibwa))  
+Sedem Amuzu (GitHub: [@SamuzuKofi](https://github.com/SamuzuKofi))
+Joshua Agonzibwa (GitHub: [@jagonzibwa](https://github.com/jagonzibwa))
 Larry Sentore (GitHub: [@Larry-Sentore](https://github.com/Larry-Sentore))
 
 ----------------------------------------
