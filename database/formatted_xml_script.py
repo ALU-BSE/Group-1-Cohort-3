@@ -1,3 +1,4 @@
+## Script to format XML file into a more readable structure
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom 
 from pprint import pprint
