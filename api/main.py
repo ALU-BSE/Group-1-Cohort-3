@@ -2,6 +2,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import re
 from urllib.parse import parse_qs, urlparse
+from auth import require_auth
+
 
 PORT = 8000
 
@@ -157,6 +159,8 @@ class SimpleRESTHandler(BaseHTTPRequestHandler):
         self._dispatch('DELETE')
 
     def _dispatch(self, method):
+        if not require_auth(self):
+            return
         path = urlparse(self.path).path
         for (m, pattern, handler) in self.routes:
             if m != method:
