@@ -4,14 +4,15 @@ import time
 # Load and extract SMS transactions
 with open("database/xml_to_json.json", "r") as f:
     data = json.load(f)
-    transactions = data["smses"]["sms"]
+    transactions = data["transaction"]
 
-target_id = input("Enter the transaction ID to search for: ")
+target_id = input("Enter the transaction ID to search for (0000 format): ")
+target_id = "TRNS_" + target_id
 
 # Linear search function
 def linear_search(transactions, target_id):
     for transaction in transactions:
-        if int(transaction["date"]) == target_id:
+        if (transaction["id"]) == target_id:
             return transaction
     return None
 
@@ -20,7 +21,7 @@ def dictionary_lookup(transactions_dict, target_id):
     return transactions_dict.get(target_id, None)
 
 # Build dictionary for lookup
-transactions_dict = {int(t["date"]): t for t in transactions}
+transactions_dict = {(t["id"]): t for t in transactions}
 
 # Time linear search
 start_time = time.time()
@@ -45,9 +46,6 @@ if result_dict:
 else:
     print("Dictionary Lookup: Transaction not found.")
 
-if result_dict:
-    print("Transaction Details:")
-    print(json.dumps(result_dict, indent=4))
-
 print(f"Linear Search Time: {linear_search_time:.10f} seconds")
 print(f"Dictionary Lookup Time: {dictionary_lookup_time:.10f} seconds")
+print("----------------------------------")
