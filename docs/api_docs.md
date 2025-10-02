@@ -1,5 +1,21 @@
 # MoMo SMS API Documentation
 
+## Authentication
+
+All API endpoints require Basic Authentication.
+
+**Credentials:**
+- Username: `admin`
+- Password: `pass123`
+
+**Authentication Examples:**
+```bash
+# Using -u
+curl -u admin:pass123 http://localhost:8000/users
+```
+
+---
+
 ## Users Endpoints
 
 ### List All Users
@@ -7,7 +23,7 @@
 **Endpoint & Method:** GET /users
 
 **Request Example:**
-curl http://localhost:8000/users
+curl -u admin:pass123 http://localhost:8000/users
 
 **Response Example:**
 ```json
@@ -26,7 +42,8 @@ curl http://localhost:8000/users
 ```
 
 **Error Codes:**
-`500 Internal Server Error` - Server error occurred
+- `401 Unauthorized` - Authentication required
+- `500 Internal Server Error` - Server error occurred
 
 ---
 
@@ -35,7 +52,7 @@ curl http://localhost:8000/users
 **Endpoint & Method:** `GET /users/{user_id}`
 
 **Request Example:**
-curl http://localhost:8000/users/US_0001
+curl -u admin:pass123 http://localhost:8000/users/US_0001
 
 **Response Example:**
 ```json
@@ -56,7 +73,7 @@ curl http://localhost:8000/users/US_0001
 **Endpoint & Method:** `POST /users`
 
 **Request Example:**
-curl -X POST http://localhost:8000/users -H "Content-Type: application/json" -d '{"mobile_number": "+250788123456"}'
+curl -u admin:pass123 -X POST http://localhost:8000/users -H "Content-Type: application/json" -d '{"mobile_number": "+250788123456"}'
 
 **Response Example:**
 ```json
@@ -77,7 +94,7 @@ curl -X POST http://localhost:8000/users -H "Content-Type: application/json" -d 
 **Endpoint & Method:** `PUT /users/{user_id}`
 
 **Request Example:**
-curl -X PUT http://localhost:8000/users/US_0001 -H "Content-Type: application/json" -d '{"mobile_number": "+250788999888"}'
+curl -u admin:pass123 -X PUT http://localhost:8000/users/US_0001 -H "Content-Type: application/json" -d '{"mobile_number": "+250788999888"}'
 
 **Response Example:**
 ```json
@@ -88,6 +105,7 @@ curl -X PUT http://localhost:8000/users/US_0001 -H "Content-Type: application/js
 ```
 
 **Error Codes:**
+- `401 Unauthorized` - Authentication required
 - `400 Bad Request` - Invalid JSON format
 - `404 Not Found` - User with specified ID does not exist
 - `500 Internal Server Error` - Server error occurred
@@ -99,7 +117,7 @@ curl -X PUT http://localhost:8000/users/US_0001 -H "Content-Type: application/js
 **Endpoint & Method:** `DELETE /users/{user_id}`
 
 **Request Example:**
-curl -X DELETE http://localhost:8000/users/US_0001
+curl -u admin:pass123 -X DELETE http://localhost:8000/users/US_0001
 
 **Response Example:**
 ```json
@@ -121,7 +139,7 @@ curl -X DELETE http://localhost:8000/users/US_0001
 **Endpoint & Method:** `GET /transactions`
 
 **Request Example:**
-curl http://localhost:8000/transactions
+curl -u admin:pass123 http://localhost:8000/transactions
 
 **Response Example:**
 ```json
@@ -144,6 +162,7 @@ curl http://localhost:8000/transactions
 ```
 
 **Error Codes:**
+- `401 Unauthorized` - Authentication required
 - `500 Internal Server Error` - Server error occurred
 
 ---
@@ -153,7 +172,7 @@ curl http://localhost:8000/transactions
 **Endpoint & Method:** `GET /transactions/{transaction_id}`
 
 **Request Example:**
-curl http://localhost:8000/transactions/SMS_0001
+curl -u admin:pass123 http://localhost:8000/transactions/SMS_0001
 
 **Response Example:**
 ```json
@@ -172,6 +191,7 @@ curl http://localhost:8000/transactions/SMS_0001
 ```
 
 **Error Codes:**
+- `401 Unauthorized` - Authentication required
 - `404 Not Found` - Transaction with specified ID does not exist
 - `500 Internal Server Error` - Server error occurred
 
@@ -182,7 +202,7 @@ curl http://localhost:8000/transactions/SMS_0001
 **Endpoint & Method:** `POST /transactions`
 
 **Request Example:**
-curl -X POST http://localhost:8000/transactions -H "Content-Type: application/json" -d '{"protocol": 1, "address": "+250788999888", "date_sent": "2025-10-02T14:30:00Z", "type": 2, "subject": "New Transaction", "sms_body": "You have sent 15,000 RWF to Bob Wilson.", "read": 0, "status": 0, "sub_id": "SUB103"}'
+curl -u admin:pass123 -X POST http://localhost:8000/transactions -H "Content-Type: application/json" -d '{"protocol": 1, "address": "+250788999888", "date_sent": "2025-10-02T14:30:00Z", "type": 2, "subject": "New Transaction", "sms_body": "You have sent 15,000 RWF to Bob Wilson.", "read": 0, "status": 0, "sub_id": "SUB103"}'
 
 **Response Example:**
 ```json
@@ -201,6 +221,7 @@ curl -X POST http://localhost:8000/transactions -H "Content-Type: application/js
 ```
 
 **Error Codes:**
+- `401 Unauthorized` - Authentication required
 - `400 Bad Request` - Invalid JSON format or invalid payload
 - `500 Internal Server Error` - Server error occurred
 
@@ -211,7 +232,7 @@ curl -X POST http://localhost:8000/transactions -H "Content-Type: application/js
 **Endpoint & Method:** `PUT /transactions/{transaction_id}`
 
 **Request Example:**
-curl -X PUT http://localhost:8000/transactions/SMS_0001 -H "Content-Type: application/json" -d '{"read": 1, "status": 1, "sms_body": "You have received 10,000 RWF from Alice Johnson. Updated."}'
+curl -u admin:pass123 -X PUT http://localhost:8000/transactions/SMS_0001 -H "Content-Type: application/json" -d '{"read": 1, "status": 1, "sms_body": "You have received 10,000 RWF from Alice Johnson. Updated."}'
 
 **Response Example:**
 ```json
@@ -230,6 +251,7 @@ curl -X PUT http://localhost:8000/transactions/SMS_0001 -H "Content-Type: applic
 ```
 
 **Error Codes:**
+- `401 Unauthorized` - Authentication required
 - `400 Bad Request` - Invalid JSON format
 - `404 Not Found` - Transaction with specified ID does not exist
 - `500 Internal Server Error` - Server error occurred
@@ -241,7 +263,7 @@ curl -X PUT http://localhost:8000/transactions/SMS_0001 -H "Content-Type: applic
 **Endpoint & Method:** `DELETE /transactions/{transaction_id}`
 
 **Request Example:**
-curl -X DELETE http://localhost:8000/transactions/SMS_0001
+curl -u admin:pass123 -X DELETE http://localhost:8000/transactions/SMS_0001
 
 **Response Example:**
 ```json
@@ -251,5 +273,6 @@ curl -X DELETE http://localhost:8000/transactions/SMS_0001
 ```
 
 **Error Codes:**
+- `401 Unauthorized` - Authentication required
 - `404 Not Found` - Transaction with specified ID does not exist
 - `500 Internal Server Error` - Server error occurred
