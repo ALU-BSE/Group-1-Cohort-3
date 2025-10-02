@@ -538,6 +538,13 @@ We designed a database for our web app ... Overall, our design allows for easy v
 
 ---
 
+## Rest API Report
+
+**Download the full Building and Securing REST API Report (PDF):**  
+[Database Design Document (PDF)](Building%20and%20Securing%20REST%20API%20Report.pdf)
+
+---
+
 ## Members
 
 Sedem Amuzu (GitHub: [@SamuzuKofi](https://github.com/SamuzuKofi))  
