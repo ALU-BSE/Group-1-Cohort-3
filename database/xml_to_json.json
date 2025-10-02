@@ -52434,13 +52434,6 @@
     ],
     "sms": [
         {
-            "id": "SMS_0001",
-            "date": "1715351458724",
-            "body": "You have received 2000 RWF from Jane Smith (*********013) on your mobile money account at 2024-05-10 16:30:51. Message from sender: . Your new balance:2000 RWF. Financial Transaction Id: 76662021700.",
-            "user_id": "US_0001",
-            "sub_id": "6"
-        },
-        {
             "id": "SMS_0002",
             "date": "1715351506754",
             "body": "TxId: 73214484437. Your payment of 1,000 RWF to Jane Smith 12845 has been completed at 2024-05-10 16:31:39. Your new balance: 1,000 RWF. Fee was 0 RWF.Kanda*182*16# wiyandikishe muri poromosiyo ya BivaMoMotima, ugire amahirwe yo gutsindira ibihembo bishimishije.",

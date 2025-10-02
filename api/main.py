@@ -134,9 +134,35 @@ class SimpleRESTHandler(BaseHTTPRequestHandler):
             return None
         raw = self.rfile.read(length)
         try:
-            return json.loads(raw)
-        except json.JSONDecodeError:
-            return 'BAD_JSON'
+            # decode bytes to string (safer) and handle accidental surrounding single-quotes
+            try:
+                decoded = raw.decode('utf-8')
+            except Exception:
+                decoded = raw.decode('utf-8', errors='replace')
+
+            # common PowerShell/curl issue: body may be wrapped in single quotes
+            if decoded.startswith("'") and decoded.endswith("'"):
+                decoded = decoded[1:-1]
+
+            try:
+                return json.loads(decoded)
+            except json.JSONDecodeError as e:
+                # fall through to debug prints
+                pass
+        except Exception:
+            # fall through to debug prints
+            decoded = None
+
+        # debug: print raw payload and headers to help diagnose malformed JSON
+        try:
+            print('DEBUG: Failed to parse JSON body; Content-Length=', length)
+            print('DEBUG: Raw body bytes:', raw)
+            print('DEBUG: Decoded string:', repr(decoded))
+            print('DEBUG: Headers:', dict(self.headers))
+            print('DEBUG: JSON error: Expecting property name enclosed in double quotes or similar')
+        except Exception:
+            pass
+        return 'BAD_JSON'
 
     def _send_json(self, obj, status=200):
         self._set_headers(status=status)
