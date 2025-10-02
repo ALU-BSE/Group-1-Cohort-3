@@ -5,9 +5,13 @@ USERS = {
     "admin": "pass123",}
 
 def check_auth(handler):
-    auth_header = handler.headers.get('Authorization')
+    """Validate Basic auth header on the given handler.
+
+    Returns True when credentials match, False otherwise. Does not send
+    HTTP responses; caller (require_auth) will handle the 401 response.
+    """
+    auth_header = handler.headers.get('Authorization') if handler and getattr(handler, 'headers', None) is not None else None
     if not auth_header or not auth_header.startswith('Basic '):
-        handler._send_json({'error': 'authorization required'}, status=401)
         return False
 
     encoded = auth_header.split(" ", 1)[1]
@@ -19,7 +23,7 @@ def check_auth(handler):
         return False
     
 def require_auth(handler):
-    if not check_auth(handler.headers.get("Authorization")):
+    if not check_auth(handler):
         handler.send_response(401)
         handler.send_header("WWW-Authenticate", 'Basic realm="Access to API"')
         handler.send_header("Content-Type", "application/json")
