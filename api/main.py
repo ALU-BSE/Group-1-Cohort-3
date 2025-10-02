@@ -38,6 +38,32 @@ def _load_transactions_from_file(path='database/xml_to_json.json'):
         _transactions = {}
         _next_transaction_counter = 1
 
+def _load_users_from_file(path='database/xml_to_json.json'):
+    global _users, _next_user_id
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        user_list = data.get('user', [])
+        for item in user_list:
+            # expect item has 'id'
+            uid = item.get('id')
+            if uid:
+                _users[uid] = item
+        # derive next counter from existing ids (numbers at end)
+        max_num = 0
+        for uid in _users.keys():
+            m = re.search(r'(\d+)$', uid)
+            if m:
+                max_num = max(max_num, int(m.group(1)))
+        _next_user_id = max_num + 1
+    except FileNotFoundError:
+        # no file yet; start fresh
+        _users = {}
+        _next_user_id = 1
+    except Exception:
+        _users = {}
+        _next_user_id = 1
+
 def _next_transaction_id():
     global _next_transaction_counter
     nid = f'SMS_{_next_transaction_counter:04d}'
@@ -63,11 +89,30 @@ def _save_transactions_to_file(path='database/xml_to_json.json'):
         # on failure, skip persisting to avoid crashing the API
         pass
 
+def _save_users_to_file(path='database/xml_to_json.json'):
+    # load existing file if present, replace 'user' with current users list
+    try:
+        data = {}
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            data = {}
+        data['user'] = list(_users.values())
+        # ensure other top-level keys exist
+        for k in ('sms','transaction_category','transaction','system_log','service_centre','backup'):
+            data.setdefault(k, [])
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+    except Exception:
+        # on failure, skip persisting to avoid crashing the API
+        pass
+
 def _next_id():
     global _next_user_id
-    uid = _next_user_id
+    uid = f'US_{_next_user_id:04d}'
     _next_user_id += 1
-    return str(uid)
+    return uid
 
 class SimpleRESTHandler(BaseHTTPRequestHandler):
 
@@ -193,13 +238,16 @@ def create_user(handler):
     if body == 'BAD_JSON':
         handler._send_json({'error': 'invalid json'}, status=400)
         return
-    if not isinstance(body, dict) or 'name' not in body:
-        handler._send_json({'error': 'name required'}, status=400)
+    if not isinstance(body, dict):
+        handler._send_json({'error': 'invalid payload'}, status=400)
         return
     uid = _next_id()
-    user = {'id': uid, 'name': body['name']}
-    _users[uid] = user
-    handler._send_json(user, status=201)
+    # allow caller to supply some fields; ensure id present
+    record = {'id': uid}
+    record.update(body)
+    _users[uid] = record
+    _save_users_to_file()
+    handler._send_json(record, status=201)
 
 def update_user(handler, user_id):
     body = handler._parse_json_body()
@@ -210,13 +258,18 @@ def update_user(handler, user_id):
     if not user:
         handler._send_json({'error': 'user not found'}, status=404)
         return
-    # allow partial updates
-    user.update({k: v for k, v in body.items() if k != 'id'})
+    # apply partial updates except id
+    for k, v in (body.items() if isinstance(body, dict) else []):
+        if k == 'id':
+            continue
+        user[k] = v
+    _save_users_to_file()
     handler._send_json(user)
 
 def delete_user(handler, user_id):
     if user_id in _users:
         del _users[user_id]
+        _save_users_to_file()
         handler._send_json({'deleted': user_id})
     else:
         handler._send_json({'error': 'user not found'}, status=404)
@@ -225,9 +278,9 @@ def delete_user(handler, user_id):
 SimpleRESTHandler.routes = [
     ('GET', re.compile(r'^/users/?$'), lambda h: list_users(h)),
     ('POST', re.compile(r'^/users/?$'), lambda h: create_user(h)),
-    ('GET', re.compile(r'^/users/(?P<user_id>\d+)/?$'), lambda h, user_id: get_user(h, user_id)),
-    ('PUT', re.compile(r'^/users/(?P<user_id>\d+)/?$'), lambda h, user_id: update_user(h, user_id)),
-    ('DELETE', re.compile(r'^/users/(?P<user_id>\d+)/?$'), lambda h, user_id: delete_user(h, user_id)),
+    ('GET', re.compile(r'^/users/(?P<user_id>[^/]+)/?$'), lambda h, user_id: get_user(h, user_id)),
+    ('PUT', re.compile(r'^/users/(?P<user_id>[^/]+)/?$'), lambda h, user_id: update_user(h, user_id)),
+    ('DELETE', re.compile(r'^/users/(?P<user_id>[^/]+)/?$'), lambda h, user_id: delete_user(h, user_id)),
     # transactions endpoints
     ('GET', re.compile(r'^/transactions/?$'), lambda h: list_transactions(h)),
     ('POST', re.compile(r'^/transactions/?$'), lambda h: create_transaction(h)),
@@ -247,6 +300,7 @@ def run(server_class=ThreadingHTTPServer, handler_class=SimpleRESTHandler, port=
         httpd.server_close()
 
 if __name__ == '__main__':
-    # load transactions from the json file (if present) before starting
+    # load data from the json file (if present) before starting
     _load_transactions_from_file()
+    _load_users_from_file()
     run()
