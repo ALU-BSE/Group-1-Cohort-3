@@ -4,14 +4,10 @@
 
 ### List All Users
 
-**Endpoint & Method:** `GET /users`
+**Endpoint & Method:** GET /users
 
 **Request Example:**
-```http
-GET /users HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-```
+curl http://localhost:8000/users
 
 **Response Example:**
 ```json
@@ -30,7 +26,7 @@ Content-Type: application/json
 ```
 
 **Error Codes:**
-- `500 Internal Server Error` - Server error occurred
+`500 Internal Server Error` - Server error occurred
 
 ---
 
@@ -39,11 +35,7 @@ Content-Type: application/json
 **Endpoint & Method:** `GET /users/{user_id}`
 
 **Request Example:**
-```http
-GET /users/US_0001 HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-```
+curl http://localhost:8000/users/US_0001
 
 **Response Example:**
 ```json
@@ -64,15 +56,7 @@ Content-Type: application/json
 **Endpoint & Method:** `POST /users`
 
 **Request Example:**
-```http
-POST /users HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-
-{
-  "mobile_number": "+250788123456"
-}
-```
+curl -X POST http://localhost:8000/users -H "Content-Type: application/json" -d '{"mobile_number": "+250788123456"}'
 
 **Response Example:**
 ```json
@@ -93,15 +77,7 @@ Content-Type: application/json
 **Endpoint & Method:** `PUT /users/{user_id}`
 
 **Request Example:**
-```http
-PUT /users/US_0001 HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-
-{
-  "mobile_number": "+250788999888"
-}
-```
+curl -X PUT http://localhost:8000/users/US_0001 -H "Content-Type: application/json" -d '{"mobile_number": "+250788999888"}'
 
 **Response Example:**
 ```json
@@ -123,11 +99,7 @@ Content-Type: application/json
 **Endpoint & Method:** `DELETE /users/{user_id}`
 
 **Request Example:**
-```http
-DELETE /users/US_0001 HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-```
+curl -X DELETE http://localhost:8000/users/US_0001
 
 **Response Example:**
 ```json
@@ -149,11 +121,7 @@ Content-Type: application/json
 **Endpoint & Method:** `GET /transactions`
 
 **Request Example:**
-```http
-GET /transactions HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-```
+curl http://localhost:8000/transactions
 
 **Response Example:**
 ```json
@@ -185,11 +153,7 @@ Content-Type: application/json
 **Endpoint & Method:** `GET /transactions/{transaction_id}`
 
 **Request Example:**
-```http
-GET /transactions/SMS_0001 HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-```
+curl http://localhost:8000/transactions/SMS_0001
 
 **Response Example:**
 ```json
@@ -218,23 +182,7 @@ Content-Type: application/json
 **Endpoint & Method:** `POST /transactions`
 
 **Request Example:**
-```http
-POST /transactions HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-
-{
-  "protocol": 1,
-  "address": "+250788999888",
-  "date_sent": "2025-10-02T14:30:00Z",
-  "type": 2,
-  "subject": "New Transaction",
-  "sms_body": "You have sent 15,000 RWF to Bob Wilson.",
-  "read": 0,
-  "status": 0,
-  "sub_id": "SUB103"
-}
-```
+curl -X POST http://localhost:8000/transactions -H "Content-Type: application/json" -d '{"protocol": 1, "address": "+250788999888", "date_sent": "2025-10-02T14:30:00Z", "type": 2, "subject": "New Transaction", "sms_body": "You have sent 15,000 RWF to Bob Wilson.", "read": 0, "status": 0, "sub_id": "SUB103"}'
 
 **Response Example:**
 ```json
@@ -263,17 +211,7 @@ Content-Type: application/json
 **Endpoint & Method:** `PUT /transactions/{transaction_id}`
 
 **Request Example:**
-```http
-PUT /transactions/SMS_0001 HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-
-{
-  "read": 1,
-  "status": 1,
-  "sms_body": "You have received 10,000 RWF from Alice Johnson. Updated."
-}
-```
+curl -X PUT http://localhost:8000/transactions/SMS_0001 -H "Content-Type: application/json" -d '{"read": 1, "status": 1, "sms_body": "You have received 10,000 RWF from Alice Johnson. Updated."}'
 
 **Response Example:**
 ```json
@@ -303,11 +241,7 @@ Content-Type: application/json
 **Endpoint & Method:** `DELETE /transactions/{transaction_id}`
 
 **Request Example:**
-```http
-DELETE /transactions/SMS_0001 HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-```
+curl -X DELETE http://localhost:8000/transactions/SMS_0001
 
 **Response Example:**
 ```json
